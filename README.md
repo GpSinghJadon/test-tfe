@@ -6,3 +6,26 @@ python github-scrapper.py --source_repo_url <git-hub-url> --destination_repo_url
 ```code
 git_repo_extracter.py --source_repo_url https://github.com/someDeveloper89-dev/test-tfe.git --destination_repo_url https://github.com/GpSinghJadon/test_repo.git --destination_branch_name testing9
 ```
+
+## Setup on LINUX (Debian)
+* Install PYTHON 3, Python PIP3
+
+``` 
+$ sudo apt-get install software-properties-common
+$ sudo add-apt-repository ppa:deadsnakes/ppa
+$ sudo apt-get update
+$ sudo apt-get install python3.8
+$ sudo apt-get install python3-pip 
+```
+* Install Python package via pip:
+Execute the below command in the parent directory of the repo
+
+```
+$ pip3 install -r requirements.txt 
+```
+* Setup json2hcl package of the below mentioned repo:
+https://github.com/kvz/json2hcl
+```
+curl -SsL https://github.com/kvz/json2hcl/releases/download/v0.0.6/json2hcl_v0.0.6_linux_amd64 \
+  | sudo tee /usr/local/bin/json2hcl > /dev/null && sudo chmod 755 /usr/local/bin/json2hcl && json2hcl -version
+  ```
