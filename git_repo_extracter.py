@@ -17,6 +17,7 @@ parser.add_argument("--src_resource_path", help="", required=False)             
 
 args = parser.parse_args()
 
+TF_FILES_PRODUCED = {"provider": 'providers.tf', "main": 'main.tf', "variable": 'variables.tf'}
 
 def scrapper(source_repo_url, destination_repo_url, source_branch_name= False, \
              destination_branch_name= False, private_ssh_key_path= False, src_resource_path= False):
@@ -50,10 +51,11 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= False, \
         # Manipulate terraform files
         main_tf_path = src_resource_path if src_resource_path else ''
         create_main_tf(main_tf_path)
-        #
-        # vars_tf_path = src_resource_path + 'vars.tf' if src_resource_path else 'vars.tf'
-        # create_vars_tf(vars_tf_path)
-        #
+
+        # stage the newly added files and changes
+        add_command = ['git', 'add']
+        [add_command.append(TF_FILES_PRODUCED[k]) for k in TF_FILES_PRODUCED.keys()]
+        subprocess.call(add_command)
 
         # commit the new changes
         commit_command = ['git', 'commit', '-am', 'initial commit']
