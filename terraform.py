@@ -1,4 +1,4 @@
-import ipdb, json
+import json
 import os
 from pprint import pprint
 import subprocess
@@ -6,7 +6,7 @@ import hcl2
 # from git_repo_extracter import TF_FILES_PRODUCED
 TF_FILES_PRODUCED = {"provider": 'providers.tf', "main": 'main.tf', "variable": 'variables.tf'}
 
-main_tf_filepath = 'test-tfe.git/main.tf'
+# main_tf_filepath = 'test-tfe.git/main.tf'
 TERRAFORM_KEYWORDS = ['resource']
 TERRAFORM_VERSION = "~> 0.12"
 # Default version of the providers
@@ -27,7 +27,7 @@ terraform {{
 }}
 '''
 
-def write_hcl_file(data):
+def write_hcl_file(data, filepath):
     temp_tf_data_parsed_file = 'new_main.json'
     try:
         # write the parsed json data to a new file
@@ -35,9 +35,10 @@ def write_hcl_file(data):
             json.dump(data, nf)
 
         #   use json to hcl to generate the tf data.
+        print("json2hcl is now creating HCL file from JSON data")
         ps = subprocess.Popen(('cat', temp_tf_data_parsed_file), stdout=subprocess.PIPE)
         output = subprocess.check_output(('json2hcl'), stdin=ps.stdout)
-        print(output)
+        print('HCL file written:=========== {}'.format(output))
 
         # Remove double quotes from the output
         temp_tf_data = output.decode(encoding='UTF-8',errors='strict').split('\n')
@@ -55,7 +56,7 @@ def write_hcl_file(data):
                     new_tf_data += ' ' + word
             new_tf_data += "\r\n"
 
-        with open(main_tf_filepath, 'w') as outfile:
+        with open(filepath, 'w') as outfile:
             outfile.write(new_tf_data)
 
         # Clear the temporary files
@@ -77,7 +78,7 @@ def create_main_tf(src_directory):
             print(json.dumps(parsed_tf_data))
 
         # CREATE main.tf HCL FILE FROM JSON DATA
-        write_hcl_file(parsed_tf_data)
+        write_hcl_file(parsed_tf_data, main_tf_filepath)
 
         # CREATE variables.tf file from the variables data
         create_variable_tf(variables,variables_tf_filepath)
@@ -88,7 +89,7 @@ def create_main_tf(src_directory):
         print("main tf file not found: {}".format(e))
 
 def create_variable_tf(variables, variables_filepath):
-    pprint(variables)
+    print('Variables.tf file creation started')
     vars_tf_data = ''
 
     for key, value in variables.items():
@@ -103,6 +104,7 @@ def create_variable_tf(variables, variables_filepath):
 
 
 def create_providers_tf(provider, providers_tf_filepath):
+    print('providers.tf file creation started')
     try:
         if not provider:
             raise Exception("Cannot write providers.tf file because the providers are missing")
