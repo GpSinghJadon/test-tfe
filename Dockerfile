@@ -7,9 +7,12 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update \
     && apt-get install -y python3.8 python3-pip
 
+RUN git config --global user.email "gajenderpalsingh@gmail.com"
+RUN git config --global user.name "gpsinghjadon"
+
 RUN curl -SsL https://github.com/kvz/json2hcl/releases/download/v0.0.6/json2hcl_v0.0.6_linux_amd64 \
   | tee /usr/local/bin/json2hcl > /dev/null && chmod 755 /usr/local/bin/json2hcl && json2hcl -version
-
+#RUN mkdir /root/.ssh/known_hosts
 COPY ./requirements.txt ./
 RUN pip3 install --no-cache-dir -r requirements.txt
 
@@ -19,4 +22,4 @@ WORKDIR /usr/src/git_scrapper
 #RUN curl -SsL https://github.com/kvz/json2hcl/releases/download/v0.0.6/json2hcl_v0.0.6_linux_amd64 \
 #  | sudo tee /usr/local/bin/json2hcl > /dev/null && sudo chmod 755 /usr/local/bin/json2hcl && json2hcl -version
 
-CMD python3 app.py
+CMD sh start_app.sh

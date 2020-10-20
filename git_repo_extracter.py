@@ -1,8 +1,8 @@
 import subprocess, os
 import argparse
 from terraform import create_main_tf
-
-
+import shutil
+import ipdb
 
 TF_FILES_PRODUCED = {"provider": 'providers.tf', "main": 'main.tf', "variable": 'variables.tf'}
 
@@ -67,6 +67,10 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
     except Exception as e:
         print('An EXCEPTION HAS BEEN RAISED: {}'.format(e))
 
+
+    os.chdir('..')  # change working directory
+    print("Current working directory"+os.getcwd())
+    shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), repo_name))
     return repo_name
 
 

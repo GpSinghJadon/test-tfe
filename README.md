@@ -33,12 +33,22 @@ curl -SsL https://github.com/kvz/json2hcl/releases/download/v0.0.6/json2hcl_v0.0
   | sudo tee /usr/local/bin/json2hcl > /dev/null && sudo chmod 755 /usr/local/bin/json2hcl && json2hcl -version
   ```
 
-# Note:
+## Docker setup:
+# Create an Image of the current project.
+```
+docker build -t git_scrapper:latest .
+```
+# Create a running container with the given environment vairables
+```
+docker run --rm -it -e source_repo_url='https://github.com/someDeveloper89-dev/test-tfe.git' \
+-e destination_repo_url='git@github.com:GpSinghJadon/test-tfe.git' -e destination_branch_name='branch-20' 
+-e private_ssh_key_path='test'  -v "$(pwd)/:/usr/src/git_scrapper"  git_scrapper:latest
+```
+```
+docker run --rm -it -e source_repo_url='https://github.com/someDeveloper89-dev/test-tfe.git' \
+-e destination_repo_url='https://github.com/GpSinghJadon/test-tfe.git' -e destination_branch_name='branch-20' \
+-v "$(pwd)/:/usr/src/git_scrapper"  git_scrapper:latest
+```
+
+# Notes:
 * The destination branch can be a new non-existing branch.
-
-
-
-
-docker run --rm -it -e source_repo_url='https://github.com/someDeveloper89-dev/test-tfe.git' -e destination_repo_url='git@github.com:GpSinghJadon/test-tfe.git' -e destination_branch_name='branch-20' -e private_ssh_key_path='test'  -v "$(pwd)/:/usr/src/git_scrapper"  git_scrapper:latest
-
-docker run --rm -it -e source_repo_url='https://github.com/someDeveloper89-dev/test-tfe.git' -e destination_repo_url='https://github.com/GpSinghJadon/test-tfe.git' -e destination_branch_name='branch-20' -v "$(pwd)/:/usr/src/git_scrapper"  git_scrapper:latest
