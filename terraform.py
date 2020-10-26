@@ -1,6 +1,7 @@
 import json
 import os
 from pprint import pprint
+import ipdb
 import subprocess
 import hcl2
 # from git_repo_extracter import TF_FILES_PRODUCED
@@ -66,10 +67,11 @@ def write_hcl_file(data, filepath):
 
 def create_main_tf(src_directory):
     # new_tf_filepath = 'new_main.tf'
+    src_directory = os.getcwd()
     main_tf_filepath =      os.path.join(src_directory, TF_FILES_PRODUCED['main'])
     variables_tf_filepath = os.path.join(src_directory, TF_FILES_PRODUCED['variable'])
     providers_tf_filepath = os.path.join(src_directory, TF_FILES_PRODUCED['provider'])
-
+    ipdb.set_trace()
     try:
         with open(main_tf_filepath, 'r') as f:
             # main_tf_data = f.read()
@@ -105,6 +107,7 @@ def create_variable_tf(variables, variables_filepath):
 
 def create_providers_tf(provider, providers_tf_filepath):
     print('providers.tf file creation started')
+    ipdb.set_trace()
     try:
         if not provider:
             raise Exception("Cannot write providers.tf file because the providers are missing")
@@ -115,9 +118,9 @@ def create_providers_tf(provider, providers_tf_filepath):
             provider_name= provider['name'],
             provider_version= provider['version']
         )
-
-        with open(providers_tf_filepath, 'w') as vars_tf_file:
-            vars_tf_file.write(provider_tf_data)
+        print('providers data is:'.format(provider_tf_data))
+        with open(providers_tf_filepath, 'w') as providers_tf_file:
+            providers_tf_file.write(provider_tf_data)
     except Exception as e:
         print("cannot write providers.tf file: {}".format(e))
 

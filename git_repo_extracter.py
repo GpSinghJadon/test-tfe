@@ -17,7 +17,7 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
         destination_branch_name = source_branch_name
     # PRIVATE_KEY_FILEPATH = "/Users/gajensin/.ssh/test"
     try:
-        repo_name = source_repo_url.split("/")[-1]
+        repo_name = source_repo_url.split("/")[-1].split('.')[0]
         command = ['git', 'clone']
 
         if source_branch_name:
