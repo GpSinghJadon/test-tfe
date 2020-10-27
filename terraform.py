@@ -67,10 +67,12 @@ def write_hcl_file(data, filepath):
 
 def create_main_tf(src_directory):
     # new_tf_filepath = 'new_main.tf'
-    src_directory = os.getcwd()
     main_tf_filepath =      os.path.join(src_directory, TF_FILES_PRODUCED['main'])
-    variables_tf_filepath = os.path.join(src_directory, TF_FILES_PRODUCED['variable'])
-    providers_tf_filepath = os.path.join(src_directory, TF_FILES_PRODUCED['provider'])
+    # src_directory = os.getcwd()
+    new_main_tf_filepath =      TF_FILES_PRODUCED['main']
+    variables_tf_filepath = TF_FILES_PRODUCED['variable']
+    providers_tf_filepath = TF_FILES_PRODUCED['provider']
+
     ipdb.set_trace()
     try:
         with open(main_tf_filepath, 'r') as f:
@@ -80,7 +82,7 @@ def create_main_tf(src_directory):
             print(json.dumps(parsed_tf_data))
 
         # CREATE main.tf HCL FILE FROM JSON DATA
-        write_hcl_file(parsed_tf_data, main_tf_filepath)
+        write_hcl_file(parsed_tf_data, new_main_tf_filepath)
 
         # CREATE variables.tf file from the variables data
         create_variable_tf(variables,variables_tf_filepath)

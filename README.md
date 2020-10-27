@@ -45,9 +45,7 @@ docker run --rm -it -e source_repo_url='https://github.com/someDeveloper89-dev/t
 -e private_ssh_key_path='test'  -v "$(pwd)/:/usr/src/git_scrapper"  git_scrapper:latest
 ```
 ```
-docker run --rm -it -e source_repo_url='https://github.com/someDeveloper89-dev/test-tfe.git' \
--e destination_repo_url='https://github.com/GpSinghJadon/test-tfe.git' -e destination_branch_name='branch-20' \
--v "$(pwd)/:/usr/src/git_scrapper"  git_scrapper:latest
+docker run --rm -it -e source_repo_url='https://github.com/terraform-providers/terraform-provider-azurerm.git' -e destination_repo_url='git@github.pwc.com:robin-budhathoki/python-script-tfe.git' -e destination_branch_name='test1' -e src_resource_path='terraform-provider-azurerm/examples/api-management/' -e private_ssh_key_path='test' -v "$(pwd)/:/usr/src/git_scrapper"  git_scrapper:latest
 ```
 
 # Notes:

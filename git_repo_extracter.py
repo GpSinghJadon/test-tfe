@@ -34,6 +34,7 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
         # clone the source repository
         command.append(repo_name)
 
+        ipdb.set_trace()
         subprocess.call(command)
         print('Source git repo clone successfully')
 
@@ -53,6 +54,16 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
 
         subprocess.call(add_command)
         print("git repo files added: \n {}".format(add_command))
+
+
+        # Delete unwanted files
+        ipdb.set_trace()
+        paths= os.listdir()
+        # filter(lambda x: x in TF_FILES_PRODUCED.values(), list(paths))
+        for x in TF_FILES_PRODUCED.values():
+            if x in paths:
+                paths.remove(x)
+        delete_non_tf_files(paths)
         # commit the new changes
         commit_command = ['git', 'commit', '-am', 'initial commit']
         commit_output = subprocess.check_output(commit_command)
@@ -73,7 +84,8 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
     shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), repo_name))
     return repo_name
 
-
+def delete_non_tf_files(paths):
+    for path in paths: shutil.rmtree(path) if os.path.isdir(path) else os.remove(path)
 # The function is called only if the script is ran as a main script
 if __name__ == '__main__':
     # Parse command line arguments
