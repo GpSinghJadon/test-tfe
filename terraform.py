@@ -73,7 +73,6 @@ def create_main_tf(src_directory):
     variables_tf_filepath = TF_FILES_PRODUCED['variable']
     providers_tf_filepath = TF_FILES_PRODUCED['provider']
 
-    ipdb.set_trace()
     try:
         with open(main_tf_filepath, 'r') as f:
             # main_tf_data = f.read()
@@ -109,7 +108,7 @@ def create_variable_tf(variables, variables_filepath):
 
 def create_providers_tf(provider, providers_tf_filepath):
     print('providers.tf file creation started')
-    ipdb.set_trace()
+    # ipdb.set_trace()
     try:
         if not provider:
             raise Exception("Cannot write providers.tf file because the providers are missing")

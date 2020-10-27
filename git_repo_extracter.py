@@ -34,7 +34,7 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
         # clone the source repository
         command.append(repo_name)
 
-        ipdb.set_trace()
+        # ipdb.set_trace()
         subprocess.call(command)
         print('Source git repo clone successfully')
 
@@ -57,7 +57,7 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
 
 
         # Delete unwanted files
-        ipdb.set_trace()
+        # ipdb.set_trace()
         paths= os.listdir()
         paths.remove('.git')
         # filter(lambda x: x in TF_FILES_PRODUCED.values(), list(paths))
@@ -80,9 +80,9 @@ def scrapper(source_repo_url, destination_repo_url, source_branch_name= 'master'
         print('An EXCEPTION HAS BEEN RAISED: {}'.format(e))
 
 
-    # os.chdir('..')  # change working directory
-    # print("Current working directory"+os.getcwd())
-    # shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), repo_name))
+    os.chdir('..')  # change working directory
+    print("Current working directory"+os.getcwd())
+    shutil.rmtree(os.path.join(os.path.dirname(os.path.abspath(__file__)), repo_name))
     return repo_name
 
 def delete_non_tf_files(paths):
